@@ -19,7 +19,9 @@ public class Worker {
 		factory.setHost(Const.HOST);
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
+		channel.queueDeclare(Const.QUEUE_NAME, true, false, false, null);
 		
+		channel.basicQos(1);
 		System.out.println("[*] waiting for message, to exit press ctrl+c");
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
@@ -34,10 +36,12 @@ public class Worker {
 					e.printStackTrace();
 				} finally {
 					System.out.println("[x] Done");
+					channel.basicAck(envelope.getDeliveryTag(), false);
 				}
 			}
 		};
-		channel.basicConsume(Const.QUEUE_NAME, true, consumer);
+		boolean autoAck = false;
+		channel.basicConsume(Const.QUEUE_NAME, autoAck, consumer);
 	}
 
 	protected static void doWork(String message) throws InterruptedException {

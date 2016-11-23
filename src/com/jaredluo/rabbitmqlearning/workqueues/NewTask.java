@@ -9,6 +9,7 @@ import com.jaredluo.rabbitmqlearning.Const;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 
 public class NewTask {
 
@@ -22,9 +23,9 @@ public class NewTask {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 
-			channel.queueDeclare(Const.QUEUE_NAME, false, false, false, null);
+			channel.queueDeclare(Const.QUEUE_NAME, true, false, false, null);
 			// String message = getMsg(args);
-			channel.basicPublish("", Const.QUEUE_NAME, null, message.getBytes());
+			channel.basicPublish("", Const.QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
 			System.out.println("[x] Send '" + message + "'");
 
 			channel.close();
@@ -32,21 +33,21 @@ public class NewTask {
 		}
 	}
 
-	private static String getMsg(String[] args) {
-		if (args.length == 0) {
-			return "Hello world";
-		}
-		return joinStrings(args, " ");
-	}
-
-	private static String joinStrings(String[] args, String delimiter) {
-		if (args.length == 0) {
-			return "";
-		}
-		StringBuilder result = new StringBuilder(args[0]);
-		for (int i = 1; i < args.length; i++) {
-			result.append(delimiter).append(args[i]);
-		}
-		return result.toString();
-	}
+	// private static String getMsg(String[] args) {
+	// if (args.length == 0) {
+	// return "Hello world";
+	// }
+	// return joinStrings(args, " ");
+	// }
+	//
+	// private static String joinStrings(String[] args, String delimiter) {
+	// if (args.length == 0) {
+	// return "";
+	// }
+	// StringBuilder result = new StringBuilder(args[0]);
+	// for (int i = 1; i < args.length; i++) {
+	// result.append(delimiter).append(args[i]);
+	// }
+	// return result.toString();
+	// }
 }
