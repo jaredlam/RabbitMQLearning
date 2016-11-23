@@ -1,8 +1,9 @@
-package com.jaredluo.rabbitmqlearning;
+package com.jaredluo.rabbitmqlearning.helloworld;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.jaredluo.rabbitmqlearning.Const;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
