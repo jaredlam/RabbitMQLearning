@@ -5,4 +5,5 @@ public class Const {
 	public static final String HOST = "localhost";
 	public static final String EXCHANGE_NAME = "logs";
 	public static final String DIRECT_EXCHANGE_NAME = "direct_logs";
+	public static final String TOPIC_EXCHANGE_NAME = "topic_logs_1";
 }
